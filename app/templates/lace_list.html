@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title">All Laces ({{ laces.count }})</h1>
+        {% if user.is_superuser %}
+        <a href="{% url 'add_lace' %}" class="btn btn-gold">+ Add New Lace</a>
+        {% endif %}
+    </div>
+
+    {% if laces %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for lace in laces %}
+        <div class="col">
+            <div class="product-card">
+                <div class="position-relative">
+                    {% if lace.image %}
+                        <img src="{{ lace.image.url }}" 
+                             class="w-100" style="height: 280px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 280px;">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <span class="badge bg-info product-badge">{{ lace.status }}</span>
+                </div>
+                <div class="p-4">
+                    <h5 class="mb-2">Name: {{ lace.name }}</h5>
+                    <p class="text-muted small mb-2">{{ lace.length }} meters</p>
+                    <p class="text-muted small mb-3">Price: {{ lace.price }} Rs</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price">{{ lace.price }} Rs</span>
+                        <a href="{% url 'lace_detail' lace.id %}" class="btn btn-sm btn-outline-gold">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-scissors" style="font-size: 4rem; color: var(--primary);"></i>
+        <h3 class="mt-3">No laces found</h3>
+        <p class="text-muted">We'll add new laces soon!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

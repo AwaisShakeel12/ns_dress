@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+     
+        {% if user.is_superuser %}
+        <a href="{% url 'add_dress' %}" class="btn btn-gold">+ Add New Dress</a>
+        {% endif %}
+    </div>
+
+    {% if dresses %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for dress in dresses %}
+        <div class="col">
+            <div class="product-card">
+                <div class="position-relative">
+                    {% if dress.images.first %}
+                        <img src="{{ dress.images.first.image.url }}" 
+                             class="w-100" style="height: 280px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 280px;">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <span class="badge bg-success product-badge">{{ dress.status }}</span>
+                </div>
+                <div class="p-4">
+                    <h5 class="mb-2">Brand: {{ dress.brand_name }}</h5>
+                    <p class="text-muted small mb-2">Type: {{ dress.dress_type }}</p>
+                    <p class="text-muted small mb-3">Color: {{ dress.color }} • {{ dress.width }}×{{ dress.height }}cm</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price">{{ dress.price }} Rs</span>
+                        <a href="{% url 'dress_detail' dress.id %}" class="btn btn-sm btn-outline-gold">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-dress" style="font-size: 4rem; color: var(--primary);"></i>
+        <h3 class="mt-3">No dresses found</h3>
+        <p class="text-muted">We'll add new dresses soon!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

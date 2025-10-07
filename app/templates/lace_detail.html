@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Image -->
+        <div class="col-lg-6">
+            <div class="bg-white p-3 rounded-3 shadow-sm text-center">
+                {% if lace.image %}
+                    <img src="{{ lace.image.url }}" 
+                         class="img-fluid rounded-2"
+                         style="max-height: 500px; object-fit: contain;"
+                         alt="{{ lace.name }}">
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light rounded-2" style="height: 500px;">
+                        <span class="text-muted">No image available</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-6">
+            <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                <h1 class="display-6 fw-bold mb-3">Name: {{ lace.name }}</h1>
+                
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <p><strong>Length:</strong><br> {{ lace.length }} meters</p>
+                        <p><strong>Price:</strong><br> <span class="price fs-2">{{ lace.price }} Rs</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Status:</strong><br>
+                            <span class="badge bg-{{ lace.status|lower|default:'secondary' }}" style="color: black;">{{ lace.status }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Button -->
+                <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Inquiry%20about%20{{ lace.name }}%20lace.%20ID:%20{{ lace.id }}" 
+                   target="_blank"
+                   class="btn btn-gold w-100 py-3 mb-3 d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-whatsapp"></i>
+                    Contact on WhatsApp for Order
+                </a>
+
+                <!-- JazzCash Payment Instructions -->
+                <div class="jazzcash-banner">
+                    <h4 class="mb-3"><i class="bi bi-currency-dollar"></i> Payment via JazzCash</h4>
+                    <ol class="payment-steps mb-0">
+                        <li>Contact us on WhatsApp to confirm your order</li>
+                        <li>We'll share our JazzCash merchant number</li>
+                        <li>Send payment to: <strong>+92 XXX XXXXXXX</strong></li>
+                        <li>Share payment screenshot with us</li>
+                        <li>Your order will be processed immediately!</li>
+                    </ol>
+                </div>
+
+                <a href="{% url 'lace_list_all' %}" class="btn btn-outline-secondary w-100">← Back to Laces</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

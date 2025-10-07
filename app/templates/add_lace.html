@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <h2>Add New Lace</h2>
+
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                
+                {{ form.length.label_tag }}
+                {{ form.length }}
+                
+                {{ form.price.label_tag }}
+                {{ form.price }}
+            </div>
+            <div class="col-md-6">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                
+                {{ form.image.label_tag }}
+                {{ form.image }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Add Lace</button>
+        <a href="{% url 'lace_list' %}" class="btn btn-secondary mt-3 ms-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

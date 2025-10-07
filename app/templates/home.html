@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Banner -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold" style="color: var(--primary);">Exquisite Pakistani Dresses & Laces</h1>
+        <p class="lead text-muted mt-3">Handcrafted with premium fabrics and traditional zari work</p>
+    </div>
+
+    <!-- Dresses Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">✨ Featured Dresses</h2>
+        <a href="{% url 'dress_list_all' %}" class="btn btn-outline-gold">View All Dresses</a>
+    </div>
+
+    {% if dresses %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for dress in dresses %}
+        <div class="col">
+            <div class="product-card">
+                <div class="position-relative">
+                    {% if dress.images.first %}
+                        <img src="{{ dress.images.first.image.url }}" 
+                             class="w-100" style="height: 300px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <span class="badge bg-success product-badge">{{ dress.status }}</span>
+                </div>
+                <div class="p-4">
+                    <h5 class="mb-2">Brand: {{ dress.brand_name }}</h5>
+                    <p class="text-muted small mb-3">Type: {{ dress.dress_type }} • {{ dress.color }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price">{{ dress.price }} Rs</span>
+                        <a href="{% url 'dress_detail' dress.id %}" class="btn btn-sm btn-gold">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted text-center">No dresses available at the moment.</p>
+    {% endif %}
+
+    <!-- Laces Section -->
+    <div class="d-flex justify-content-between align-items-center mt-5 mb-4">
+        <h2 class="section-title">🧵 Premium Laces</h2>
+        <a href="{% url 'lace_list_all' %}" class="btn btn-outline-gold">View All Laces</a>
+    </div>
+
+    {% if laces %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for lace in laces %}
+        <div class="col">
+            <div class="product-card">
+                <div class="position-relative">
+                    {% if lace.image %}
+                        <img src="{{ lace.image.url }}" 
+                             class="w-100" style="height: 300px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
+                            <span class="text-muted">No Image</span>
+                        </div>
+                    {% endif %}
+                    <span class="badge bg-info product-badge">{{ lace.status }}</span>
+                </div>
+                <div class="p-4">
+                    <h5 class="mb-2">Name: {{ lace.name }}</h5>
+                    <p class="text-muted small mb-3">{{ lace.length }} meters</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price">{{ lace.price }} Rs</span>
+                        <a href="{% url 'lace_detail' lace.id %}" class="btn btn-sm btn-gold">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted text-center">No laces available at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

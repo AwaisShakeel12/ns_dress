@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        {% if user.is_superuser %}
+        <a href="{% url 'add_lace' %}" class="btn btn-primary">+ Add New Lace</a>
+        {% endif %}
+    </div>
+
+    {% if laces %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for lace in laces %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="position-relative">
+                    {% if lace.image %}
+                        <img src="{{ lace.image.url }}" 
+                             class="card-img-top" style="height: 220px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 220px;">
+                            <i class="bi bi-scissors text-muted" style="font-size: 2.5rem;"></i>
+                        </div>
+                    {% endif %}
+                    <span class="badge bg-info product-badge">{{ lace.status }}</span>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">{{ lace.name }}</h6>
+                    <p class="text-muted small">{{ lace.length }} meters</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <strong>${{ lace.price }}</strong>
+                        <a href="{% url 'lace_detail' lace.id %}" class="btn btn-sm btn-outline-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-scissors" style="font-size: 4rem; color: #e75480;"></i>
+        <h3 class="mt-3">No laces found</h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

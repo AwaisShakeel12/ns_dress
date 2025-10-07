@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-5">
+        <!-- Image Gallery -->
+        <div class="col-lg-6">
+            <div class="bg-white p-3 rounded-3 shadow-sm">
+                {% if dress.images.all %}
+                    <div id="dressCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner rounded-2">
+                            {% for img in dress.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ img.image.url }}" 
+                                         class="d-block w-100" 
+                                         style="height: 500px; object-fit: contain;"
+                                         alt="{{ dress.brand_name }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% if dress.images.count > 1 %}
+                        <button class="carousel-control-prev"  type="button" data-bs-target="#dressCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" style="background-color: #0d5c4d;" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#dressCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" style="background-color: #0d5c4d;"  aria-hidden="true"></span>
+                        </button>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light rounded-2" style="height: 500px;">
+                        <span class="text-muted">No image available</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-6">
+            <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                <div class="mb-3">
+                    <span class="badge bg-primary">Type : {{ dress.dress_type }}</span>
+                    <span class="badge bg-secondary ms-2">Color: {{ dress.color }}</span>
+                </div>
+                
+                <h1 class="display-6 fw-bold mb-3">Brand: {{ dress.brand_name }}</h1>
+                <p class="lead mb-4">Detail: {{ dress.description }}</p>
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <p><strong>Type : </strong><br>{{ dress.dress_type }}</p>
+                        <p><strong>Color :</strong><br>{{ dress.color }}</p>
+                        <p><strong>Width: </strong><br>{{ dress.width }}cm </p>
+                        <p><strong>Length: </strong><br>{{ dress.height }}cm</p>
+                        <p><strong>Available Quantity:</strong><br>{{ dress.quantity }} pieces</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Status:</strong><br> 
+                            <span class="badge bg-{{ dress.status|lower|default:'secondary'}}" style="color: black;">{{ dress.status }}</span>
+                        </p>
+                        <p><strong>Price:</strong><br> 
+                            <span class="price fs-2">{{ dress.price }} Rs</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Button -->
+                <a href="{{ whatsapp_url }}" 
+                   target="_blank"
+                   class="btn btn-gold w-100 py-3 mb-3 d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-whatsapp"></i>
+                    Contact on WhatsApp for Order
+                </a>
+
+                <!-- JazzCash Payment Instructions -->
+                <div class="jazzcash-banner">
+                    <h4 class="mb-3"><i class="bi bi-currency-dollar"></i> Payment via JazzCash</h4>
+                    <ol class="payment-steps mb-0">
+                        <li>Contact us on WhatsApp to confirm your order</li>
+                        <li>We'll share our JazzCash merchant number</li>
+                        <li>Send payment to: <strong>+92 XXX XXXXXXX</strong></li>
+                        <li>Share payment screenshot with us</li>
+                        <li>Your order will be processed immediately!</li>
+                    </ol>
+                </div>
+
+                <a href="{% url 'dress_list_all' %}" class="btn btn-outline-secondary w-100">← Back to Dresses</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
