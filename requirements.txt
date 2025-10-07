@@ -1,0 +1,6 @@
+Django
+pillow
+whitenoise
+sqlparse
+asgiref
+psycopg2-binary
