@@ -61,21 +61,6 @@ def dress_detail(request, id):
     })
 
 
-# def add_dress(request):
-#     if request.method == 'POST':
-#         form = DressForm(request.POST)
-#         if form.is_valid():
-#             dress = form.save()
-#             # Handle multiple image uploads
-#             images = request.FILES.getlist('images')  # 'images' is the input name
-#             for img in images:
-#                 DressImage.objects.create(dress=dress, image=img)
-#             return redirect('home')
-#     else:
-#         form = DressForm()
-#     return render(request, 'add_dress.html', {'form': form})
-
-
 
 
 @superuser_required
@@ -113,13 +98,3 @@ def lace_list(request):
 def lace_detail(request, id):
     lace = get_object_or_404(Lace, id=id)
     return render(request, 'lace_detail.html', {'lace': lace})
-
-# def add_lace(request):
-#     if request.method == 'POST':
-#         form = LaceForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('lace_list')
-#     else:
-#         form = LaceForm()
-#     return render(request, 'add_lace.html', {'form': form})
